@@ -1,0 +1,123 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: "Audiowide", sans-serif;
+  color: #f3e9d2; 
+}
+
+body {
+  display: flex;                       
+  justify-content: center;             
+  align-items: center;                 
+  height: 100vh;                       
+  margin: 0;                           
+  background-color: #242424;          
+}
+
+.board {
+  display: grid;                       
+  grid-template-columns: repeat(3, 1fr); 
+  grid-template-rows: repeat(3, 1fr);    
+  width: 400px;                        
+  height: 400px;                       
+  gap: 7px;          
+  padding: 20px;           
+  transition: opacity 0.6s ease; 
+  opacity: 1; 
+}
+
+.board.hidden {
+  opacity: 0; 
+  pointer-events: none;
+}
+
+.square {
+  display: flex;                      
+  justify-content: center;            
+  align-items: center;                
+  width: 100%;                        
+  height: 100%;                       
+  background-color: #0f0f0f;             
+  font-size: 2rem;                    
+  border: 2px solid #1C1F26;            
+  border-radius: 10px;               
+  cursor: pointer;                     
+  transition: background-color 0.3s;  
+}
+
+.square.x {
+  color: #FF4757; 
+}
+
+.square.o {
+  color: #2ED573; 
+}
+
+.square:hover {
+  background-color: #333333; 
+  box-shadow: 0 0 10px #1C1F26, 0 0 20px #1C1F26;
+}
+
+.button {
+  margin: 30px 5px;
+  font-family: 'Audiowide', sans-serif; 
+  font-size: 18px;
+  color: #00ccff; 
+  background-color: transparent;
+  border: 2px solid #5865F2; 
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  color: #5865F2; 
+  box-shadow: 0 0 10px #5865F2, 0 0 20px #5865F2, 0 0 30px #5865F2;
+  border-color: #5865F2; 
+}
+
+.winnerText {
+  font-family: inherit;
+  color: #FFD32D; 
+  font-size: 2.5rem;
+  font-weight: 400;
+  text-align: center;
+  opacity: 0;  
+  pointer-events: none; 
+  transition: opacity 2s ease-in-out;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.winnerText.visible {
+  opacity: 1; 
+  pointer-events: auto; 
+}
+
+h2 {
+  color: inherit; 
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+h3 {
+  display: inline;
+  margin: 20%;
+  color: #5865F2; 
+  font-weight: 100;
+}
