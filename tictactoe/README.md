@@ -1,8 +1,12 @@
-# React + Vite
+# Tic Tac Toe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+A classic two-player game where players take turns marking a 3x3 grid. The first to align three marks (X or O) wins!
 
-Currently, two official plugins are available:
+## Technologies Used
+- React
+- JavaScript
+- CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  
+![TicTacToe](https://github.com/user-attachments/assets/760b5b28-d01f-4e9a-8529-134a02fc03e9)
