@@ -1,58 +1,34 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import { Typography } from '@mui/material';
+import React from 'react';  
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Box,
+  Checkbox,
+  Typography
+} from '@mui/material';  
 
-
-function createTask(id, name, priority) {
-  return { id, name, priority };
-}
-
-const rows = [
-  createTask(1, 'Buy groceries', 1),
-  createTask(2, 'Walk the dog', 2),
-  createTask(3, 'Complete React project', 1),
-  createTask(4, 'Do laundry', 3),
-];
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) return -1;
-  if (b[orderBy] > a[orderBy]) return 1;
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
+import ToDoItem from './Item';  
+import { getComparator, createTask } from './utils';  
 
 export default function TodoList() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('priority');
   const [selected, setSelected] = React.useState([]);
+  const [rows, setRows] = React.useState([
+    createTask(1, 'Feed the Cats', 1),
+    createTask(2, 'Read New Chapter', 3)
+  ]); 
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-//   const handleSelectAllClick = (event) => {
-//     if (event.target.checked) {
-//       const newSelected = rows.map((n) => n.id);
-//       setSelected(newSelected);
-//       return;
-//     }
-//     setSelected([]);
-//   };
+  }
 
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
@@ -70,77 +46,89 @@ export default function TodoList() {
       );
     }
     setSelected(newSelected);
-  };
+  }
 
-  
+  const addTaskToRows = (taskName, taskPriority) => {
+    const newTask = createTask(rows.length + 1, taskName, taskPriority);
+    setRows([...rows, newTask]);
+  }
+
+  const priorityLabel = (priority) => {
+    switch (priority) {
+      case 1:
+        return 'Immediate';
+      case 2:
+        return 'Can Wait';
+      case 3:
+        return 'Low Priority';
+      default:
+        return '';
+    }
+  }
+
   return (
-    <Box className="todo-box">
-        <Typography className="table-title" variant="h5">
+    <div className='todo-container'>
+      <Typography className="table-title" variant="h5">
         My Tasks
       </Typography>
-      <TableContainer>
-        <Table aria-labelledby="tableTitle">
-          <TableHead>
-            <TableRow>
-              <TableCell padding="checkbox">
-                {/* <Checkbox
-                  color="primary"
-                  indeterminate={selected.length > 0 && selected.length < rows.length}
-                  checked={rows.length > 0 && selected.length === rows.length}
-                  onChange={handleSelectAllClick}
-                /> */}
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'name'}
-                  direction={order}
-                  onClick={() => handleRequestSort(null, 'name')}
-                >
+
+      <ToDoItem addTask={addTaskToRows} /> 
+
+      <Box className="todo-box">
+        <TableContainer>
+          <Table aria-labelledby="tableTitle">
+            <TableHead>
+              <TableRow>
+                <TableCell padding="checkbox"></TableCell>
+                <TableCell>
                   Task
-                </TableSortLabel>
-              </TableCell>
-              <TableCell align="right">
-                <TableSortLabel
-                  active={orderBy === 'priority'}
-                  direction={order}
-                  onClick={() => handleRequestSort(null, 'priority')}
-                >
-                  Priority
-                </TableSortLabel>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .sort(getComparator(order, orderBy))
-              .map((row) => {
-                const isItemSelected = selected.includes(row.id);
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
+                </TableCell>
+                <TableCell align="right">
+                  <TableSortLabel
+                    active={orderBy === 'priority'}
+                    direction={order}
+                    onClick={() => handleRequestSort(null, 'priority')}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                      />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.priority}</TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+                    Priority
+                  </TableSortLabel>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {rows
+                .sort(getComparator(order, orderBy))
+                .map((row) => {
+                  const isItemSelected = selected.includes(row.id);
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row.id)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.id}
+                      selected={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="right" className="priority-label">
+                        {priorityLabel(row.priority)}
+                      </TableCell> 
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </div>
   );
 }

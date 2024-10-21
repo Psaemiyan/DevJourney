@@ -1,5 +1,11 @@
-.table-title {
+/* .table-title {
   font-weight: 700;
+}
+
+.todo-box .MuiTableHead-root .MuiTableCell-head {
+  background-color: #f5f5f5;  
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .todo-box {
@@ -41,4 +47,4 @@
 
 .MuiTableSortLabel-iconDirectionDesc {
   color: #ffab91 !important; 
-}
+} */
