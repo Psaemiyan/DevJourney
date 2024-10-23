@@ -1,7 +1,12 @@
-export default function Buttons()
-{
-    return <>   
-    <button>See Answer</button>
-    <button>Another Go</button>
-    </>
-}
+// export default function Buttons()
+// {
+//     // const handleRestart = () => 
+//     // {
+
+//     // }
+
+//     return <>   
+//         <button>See Answer</button>
+//         <button onClick={handleRestart}>Another Go</button>
+//     </>
+// }
