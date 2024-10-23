@@ -4,7 +4,7 @@ export default function Board() {
     const height = 6
     const width = 5
 
-    const words = ['SUSHI', 'PIZZA', 'CHAIR', 'HOUSE', 'PLANT', 'WATER', 'TABLE', 'COMPUTER', 'MOUSE', 'BOOK']
+    const words = ['SUSHI', 'PIZZA', 'CHAIR', 'HOUSE', 'PLANT', 'WATER', 'TABLE', 'MOUSE']
     
     const getRandomWord = () => {
         const randomIndex = Math.floor(Math.random() * words.length)
