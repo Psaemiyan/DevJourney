@@ -1,16 +1,11 @@
 import { useState, useEffect, useRef } from "react"
+import { getRandomWord } from "./utils"
+import Row from "./row"
+import Controls from "./controls"
 
 export default function Board() {  
     const height = 6
     const width = 5
-
-    const words = ['SUSHI', 'PIZZA', 'CHAIR', 'HOUSE', 'PLANT', 'WATER', 'TABLE', 'MOUSE']
-    
-    const getRandomWord = () => {
-        const randomIndex = Math.floor(Math.random() * words.length)
-        return words[randomIndex]
-    }
-
 
     const [board, setBoard] = useState(Array.from({ length: height }, () => Array(width).fill('')))
     const [statusBoard, setStatusBoard] = useState(Array(height).fill(Array(width).fill(''))) 
@@ -39,7 +34,6 @@ export default function Board() {
                 setBoard(prevBoard => {
                     const newBoard = [...prevBoard]
                     newBoard[currentRow][currentCol] = e.key.toUpperCase()
-                    console.log(newBoard)
                     return newBoard
                 })
                 setCurrentCol(currentCol + 1)
@@ -90,15 +84,6 @@ export default function Board() {
         }
     }
     
-    
-
-    useEffect(() => {
-        window.addEventListener('keyup', handleKeyPress)
-        return () => {
-            window.removeEventListener('keyup', handleKeyPress)
-        }
-    }, [currentRow, currentCol, gameOver])
-
 
     const handleRestart = () => {
         setBoard(Array.from({ length: height }, () => Array(width).fill('')))
@@ -116,29 +101,22 @@ export default function Board() {
         setShowAnswer(!showAnswer) 
     }
     
+    useEffect(() => {
+        window.addEventListener('keyup', handleKeyPress)
+        return () => {
+            window.removeEventListener('keyup', handleKeyPress)
+        }
+    }, [currentRow, currentCol, gameOver])
 
-    return <>
+
+    return (
+        <>
             <div className="board">
                 {board.map((row, rowIndex) => (
-                    <div key={rowIndex} className="row" style={{ display: 'flex', flexWrap: 'nowrap' }}>
-                        {row.map((cell, colIndex) => (
-                            <div 
-                                key={colIndex} 
-                                className={`tile ${statusBoard[rowIndex][colIndex]}`}>
-                                {cell}
-                            </div>
-                        ))}
-                    </div>
+                    <Row key={rowIndex} row={row} statusRow={statusBoard[rowIndex]} />
                 ))}
             </div>
-
-            <div>
-                <button ref= { buttonRef} onClick={revealAnswer}>See Answer</button>
-                <button ref= { buttonRef} onClick={handleRestart}>Another Go</button>
-            </div>
-
-            <div>
-                <h4 className={showAnswer ? 'visible' : 'not-visible'}>Answer was: {word}</h4>
-            </div>
-    </>
+            <Controls revealAnswer={revealAnswer} handleRestart={handleRestart} buttonRef={buttonRef} showAnswer={showAnswer} word={word} />
+        </>
+    )
 }

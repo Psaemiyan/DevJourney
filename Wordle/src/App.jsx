@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    <h1>Wordle</h1>
+    <h1>WORDLE</h1>
     <br />
     <Board />
     </>
