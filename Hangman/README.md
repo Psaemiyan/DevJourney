@@ -2,7 +2,7 @@
 
 A simple Hangman game built using React. The objective of the game is to guess a hidden word by entering one letter at a time. You have a limited number of incorrect guesses before the game is over.
 
-![Hangman Game Screenshot](./images/hangman-screenshot.png)
+![Hangman Game Screenshot](./images/hangman.jpeg)
 
 
 ## Technologies Used
