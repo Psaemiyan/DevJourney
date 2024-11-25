@@ -44,7 +44,6 @@ function App() {
     <>
         <div className="game-container">
             <h1>HANGMAN</h1>
-            <h4>{word}</h4>
             <Figure wrongLetters={wrongLetters}/>
             <LetterBoard word={word} spot={spot}/> 
             <Hangman 

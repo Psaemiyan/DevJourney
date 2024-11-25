@@ -102,7 +102,7 @@ export default function Board() {
     }
     
     useEffect(() => {
-        window.addEventListener('keyup', handleKeyPress)
+        window.addEventListener('keyup', )
         return () => {
             window.removeEventListener('keyup', handleKeyPress)
         }
