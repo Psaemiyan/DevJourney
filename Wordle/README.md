@@ -2,7 +2,7 @@
 
 A simple Wordle-style game built with React, where players guess a hidden word within a limited number of attempts.
 
-![Game Screenshot](assets/wordle.jpeg)
+![wordle](https://github.com/user-attachments/assets/70eec296-0965-4db3-a2ec-d284dd0ebad0)
 
 
 ## Table of Contents
