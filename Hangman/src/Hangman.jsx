@@ -32,7 +32,6 @@ export default function Hangman({word, setWrongLetters, gameOver, setGameOver, s
     
                     if (updatedWrongLetters.length === 6) {
                         setGameOver(true)
-                        // setWinMessage(`Game Over! The correct word was: ${word}`);
                     }
     
                     return updatedWrongLetters;

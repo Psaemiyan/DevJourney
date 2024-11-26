@@ -1,11 +1,9 @@
-export default function Restart({wrongLetters, resetGame})
+export default function Restart({gameOver, resetGame})
 {
-    const errors = wrongLetters.length
-
     return <>
         <button 
         className="restart-btn" 
-        style={{display: errors === 6? 'block': 'none'}}
+        style={{display: gameOver? 'block': 'none'}}
         onClick={resetGame}
         >
             Restart

@@ -58,7 +58,7 @@ function App() {
 
             />          
             <Display wrongLetters={wrongLetters} gameOver={gameOver} word={word} winMessage={winMessage}/> 
-            <Restart wrongLetters={wrongLetters} resetGame={resetGame}/>
+            <Restart gameOver={gameOver} resetGame={resetGame}/>
         </div>
 
     </>
