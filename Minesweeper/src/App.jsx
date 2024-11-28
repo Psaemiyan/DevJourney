@@ -6,9 +6,10 @@ import { useState } from 'react'
 function App() {
 
   const [board, setBoard] = useState([])
+  const [gameOver, setGameOver] = useState(false)
 
-  const cols = 15
-  const rows = 15
+  const cols = 16
+  const rows = 16
   const mines = 40
 
   return ( <>
@@ -21,6 +22,8 @@ function App() {
       mines={mines} 
       board={board}
       setBoard={setBoard}
+      gameOver={gameOver}
+      setGameOver={setGameOver}
     />
 
     </>

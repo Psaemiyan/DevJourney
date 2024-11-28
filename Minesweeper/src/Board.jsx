@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import Cell from './Cell'
 
 
-export default function Board({cols, rows, mines, board, setBoard})
+export default function Board({cols, rows, mines, board, setBoard, gameOver, setGameOver})
 {
 
     const initBoard = () => 
@@ -23,7 +23,8 @@ export default function Board({cols, rows, mines, board, setBoard})
                 newRow.push({
                     isMine: false,
                     adjacentMines: 0,
-                    revealed: false
+                    revealed: false,
+                    flagged: false
                 })
             }
             newBoard.push(newRow)
@@ -77,6 +78,7 @@ export default function Board({cols, rows, mines, board, setBoard})
     // FLOOD FILL
     const floodFill = (r, c) => {
         const newBoard = [...board]
+        newBoard[r] = [...newBoard[r]]
         
         // Check for out of bounds, already revealed, mine
         if (r < 0 || r >= rows || c < 0 || c >= cols || newBoard[r][c].revealed || newBoard[r][c].isMine) {
@@ -112,6 +114,8 @@ export default function Board({cols, rows, mines, board, setBoard})
                             cell={cell} 
                             board={board} 
                             setBoard={setBoard}
+                            gameOver={gameOver}
+                            setGameOver={setGameOver}
                             floodFill={floodFill}
                         />
                     ))}

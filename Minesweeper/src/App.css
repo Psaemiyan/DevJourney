@@ -21,7 +21,7 @@ h1 {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(15, 35px); 
+  grid-template-columns: repeat(16, 35px); 
   grid-gap: 3px; 
   max-width: 100%;
   max-height: 100vh;
@@ -53,6 +53,11 @@ h1 {
 .cell.revealed:not(.mine) {
   background-color: #525252; 
 
+}
+
+.cell.flagged {
+  background-color: #f6f697;
+  cursor: default;
 }
 
 .cell.mine {

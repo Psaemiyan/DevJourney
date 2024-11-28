@@ -1,42 +1,42 @@
-export default function Cell ({row, col, cell, board, setBoard, floodFill})
+export default function Cell ({row, col, cell, board, setBoard, gameOver, setGameOver, floodFill})
 {
     const handleClick = () => {
-        if(!cell.revealed) {
-            const newBoard = [...board]
-            const newRow = [...newBoard[row]]
-            newRow[col] = {...newRow[col], revealed: true}
+        if (gameOver || cell.revealed || cell.flagged) return
 
-            newBoard[row] = newRow
-            setBoard(newBoard)
-            
-            // Mine
-            if(cell.isMine)
-            {
-                console.log('GAME OVER')
-            } 
-            else {
-                // Adjacent Mines
-                if(cell.adjacentMines > 0)
-                {
-                    console.log(`there are ${cell.adjacentMines} mines around`)
-
-                } 
-                // Flood fill
-                else if (cell.adjacentMines === 0) {
-                    console.log('reveal more')
-                    floodFill(row, col)
-                }
-            }
-
+        const newBoard = [...board]
+        const newRow = [...newBoard[row]]
+        newRow[col] = {...newRow[col], revealed: true}
+        newBoard[row] = newRow
+        setBoard(newBoard)
+        
+        // Mine
+        if(cell.isMine)
+        {
+            setGameOver(true)
+        } 
+        else {
+            // Flood fill
+             if (cell.adjacentMines === 0) {
+                floodFill(row, col)
+            }  
         }
+    }
+
+    const handleRightClick = (e) => 
+    {
+        e.preventDefault()
+        if(gameOver) return
+        const newBoard = [...board];
+        newBoard[row][col] = { ...newBoard[row][col], flagged: !cell.flagged }
+        setBoard(newBoard)
     }
 
     return (
         <div
-            className={`cell ${cell.revealed? (cell.isMine ? 'mine' : 'revealed') : ''}`}
-            onClick={handleClick}
+            className={`cell ${cell.flagged? 'flagged' : cell.revealed? (cell.isMine ? 'mine' : 'revealed') : ''}`}
+            onClick={handleClick} onContextMenu={handleRightClick}
         >
-            {cell.revealed && cell.adjacentMines > 0 ? cell.adjacentMines : ''}
+            {cell.flagged? '🚩' : cell.revealed && cell.adjacentMines > 0 ? cell.adjacentMines : ''}
         </div>
     )
 }
