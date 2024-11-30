@@ -6,7 +6,7 @@ This is a Minesweeper game built using **React**, **JavaScript**, and **CSS**. T
 
 When the player wins or loses, an alert is shown to indicate the result.
 
-![Minesweeper Game](./minesweeper.jpeg)
+![Minesweeper Game](./public/minesweeper.jpeg)
 
 
 ## Features
