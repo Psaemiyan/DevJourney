@@ -2,8 +2,45 @@ import { useEffect } from "react"
 import Cell from './Cell'
 
 
-export default function Board({cols, rows, mines, board, setBoard, gameOver, setGameOver})
+export default function Board({cols, rows, mines, board, setBoard, firstClick, setFirstClick, gameOver, setGameOver})
 {
+
+    useEffect(() => {initBoard()},[])
+
+    useEffect(() => {
+        checkWin()
+    }, [board, firstClick])
+    
+
+    const checkWin = () => {
+
+        let revealedCount = 0
+        let totalCells = rows * cols
+        let mineCount = mines
+    
+        board.forEach(row => {
+            row.forEach(cell => {
+                if (cell.revealed) {
+                    revealedCount++
+                }
+            })
+        })
+        if (revealedCount === 0) return
+        if (revealedCount === totalCells - mineCount) {
+            setTimeout(() => {
+                setGameOver(true) 
+                alert("Congratulations! You win!")
+                resetGame()
+            }, 100);
+        }
+    }
+    
+    const resetGame = () => 
+    {
+        setGameOver(false)
+        initBoard()
+        setFirstClick(false)
+    }
 
     const initBoard = () => 
     {
@@ -41,7 +78,6 @@ export default function Board({cols, rows, mines, board, setBoard, gameOver, set
             {
                 newBoard[randRow][randCol].isMine = true
                 minesPlaced ++
-                // console.log(`Mine placed at (${randRow}, ${randCol})`)
             }
         }
         
@@ -73,34 +109,46 @@ export default function Board({cols, rows, mines, board, setBoard, gameOver, set
         setBoard(newBoard)
     }
 
-    useEffect(() => {initBoard()},[])
-
     // FLOOD FILL
     const floodFill = (r, c) => {
         const newBoard = [...board]
-        newBoard[r] = [...newBoard[r]]
-        
-        // Check for out of bounds, already revealed, mine
-        if (r < 0 || r >= rows || c < 0 || c >= cols || newBoard[r][c].revealed || newBoard[r][c].isMine) {
-            return;
+        const stack = [[r, c]]
+    
+        while (stack.length > 0) {
+            const [currentR, currentC] = stack.pop()
+    
+            // Check if out of bounds or already revealed
+            if (
+                currentR < 0 || currentR >= rows || currentC < 0 || currentC >= cols ||
+                newBoard[currentR][currentC].revealed ||
+                newBoard[currentR][currentC].isMine
+            ) {
+                continue // Skip invalid or already processed cells
+            }
+    
+            // Reveal the current cell
+            newBoard[currentR] = [...newBoard[currentR]]; // Copy the row for immutability
+            newBoard[currentR][currentC] = { 
+                ...newBoard[currentR][currentC], 
+                revealed: true 
+            }
+    
+            // If the current cell has no adjacent mines, add its neighbors to the stack
+            if (newBoard[currentR][currentC].adjacentMines === 0) {
+                const directions = [
+                    [-1, 0], [1, 0], [0, -1], [0, 1],     // Top, Bottom, Left, Right
+                    [-1, -1], [-1, 1], [1, -1], [1, 1]  // Top-left, Top-right, Bottom-left, Bottom-right
+                ]
+    
+                directions.forEach(([dx, dy]) => {
+                    stack.push([currentR + dx, currentC + dy])
+                })
+            }
         }
-
-        newBoard[r][c] = { ...newBoard[r][c], revealed: true }
-
-        // Reveal neighbours
-        if (newBoard[r][c].adjacentMines === 0) {
-            floodFill(r - 1, c)  // Top
-            floodFill(r + 1, c)  // Bottom
-            floodFill(r, c - 1)  // Left
-            floodFill(r, c + 1)  // Right
-            floodFill(r - 1, c - 1) // Top-left
-            floodFill(r - 1, c + 1) // Top-right
-            floodFill(r + 1, c - 1) // Bottom-left
-            floodFill(r + 1, c + 1) // Bottom-right
-        }
-
+    
         setBoard(newBoard)
     }
+    
 
     return <>
         <div className="board">
@@ -112,11 +160,14 @@ export default function Board({cols, rows, mines, board, setBoard, gameOver, set
                             row={rowIndex}
                             col={colIndex}
                             cell={cell} 
+                            firstClick = {firstClick}
+                            setFirstClick = {setFirstClick}
                             board={board} 
                             setBoard={setBoard}
                             gameOver={gameOver}
                             setGameOver={setGameOver}
                             floodFill={floodFill}
+                            resetGame={resetGame}
                         />
                     ))}
                 </div>

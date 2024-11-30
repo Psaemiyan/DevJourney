@@ -1,4 +1,4 @@
-export default function Cell ({row, col, cell, board, setBoard, gameOver, setGameOver, floodFill})
+export default function Cell ({row, col, cell, board, setBoard, firstClick, setFirstClick, gameOver, setGameOver, floodFill, resetGame})
 {
     const handleClick = () => {
         if (gameOver || cell.revealed || cell.flagged) return
@@ -8,11 +8,18 @@ export default function Cell ({row, col, cell, board, setBoard, gameOver, setGam
         newRow[col] = {...newRow[col], revealed: true}
         newBoard[row] = newRow
         setBoard(newBoard)
+
+        if(!firstClick)
+            setFirstClick(true)
         
         // Mine
         if(cell.isMine)
         {
-            setGameOver(true)
+            setTimeout(() => {
+                setGameOver(true)
+                alert("It's a mine! You lose!")
+                resetGame()
+            }, 100)
         } 
         else {
             // Flood fill
@@ -25,7 +32,7 @@ export default function Cell ({row, col, cell, board, setBoard, gameOver, setGam
     const handleRightClick = (e) => 
     {
         e.preventDefault()
-        if(gameOver) return
+        if(gameOver || cell.revealed) return
         const newBoard = [...board];
         newBoard[row][col] = { ...newBoard[row][col], flagged: !cell.flagged }
         setBoard(newBoard)
