@@ -1,14 +1,14 @@
+import React from "react";
+
 export default function Input({ value, onChange, onSubmit }) {
   return (
-    <div>
+    <div className="input-container">
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Guess the movie..."
       />
       <button onClick={onSubmit}>Submit</button>
     </div>
   );
 }
-

@@ -36,12 +36,14 @@ function Game() {
   };
 
   return (
-    <div>
+    <>
       {currentMovie && <Display emoji={currentMovie.emoji} />}
       <Input value={userInput} onChange={setUserInput} onSubmit={checkAnswer} />
-      <p>Score: {score}</p>
-      <p>{message}</p>
-    </div>
+      <p className="score">Score: {score}</p>
+      <p className={`message ${message.includes('Correct') ? 'correct' : 'incorrect'}`}>
+        {message}
+      </p>
+    </>
   );
 }
 

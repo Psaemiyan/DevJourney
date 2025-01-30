@@ -4,10 +4,9 @@ import "./App.css";
 
 export default function App() {
   return (
-    <div>
-      <h1> Movie Buff Quiz </h1>
+    <div className="app-container">
+      <h1>Guess the Movie!</h1>
       <Game />
     </div>
   )
 }
-
