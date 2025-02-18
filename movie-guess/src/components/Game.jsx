@@ -4,7 +4,21 @@ import Input from "./Input";
 
 const movies = [
   { name: "The Lion King", emoji: "🦁👑" },
+  { name: "The Dark Knight", emoji: "🦇🌃" },
+  { name: "Star Wars", emoji: "🌌🚀" },
+  { name: "Jurassic Park", emoji: "🦖🌳" },
+  { name: "Titanic", emoji: "🚢❄️" },
+  { name: "The Matrix", emoji: "💻🟩" },
+  { name: "Forrest Gump", emoji: "🏃‍♂️🍫" },
+  { name: "The Godfather", emoji: "🍝🎩" },
+  { name: "Pulp Fiction", emoji: "🍔🔫" },
+  { name: "Back to the Future", emoji: "⏳🚗" },
+  { name: "Gladiator", emoji: "🛡️⚔️" },
+  { name: "Harry Potter", emoji: "⚡🧙‍♂️" },
+  { name: "Frozen", emoji: "❄️👭" },
+  { name: "The Avengers", emoji: "🦸‍♀️💥" },
 ];
+
 
 function Game() {
   const [currentMovie, setCurrentMovie] = useState(null);
